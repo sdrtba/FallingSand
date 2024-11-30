@@ -4,7 +4,7 @@ Game::Game(sf::RenderWindow& window) : window(window) {
     scale = 4;
     width = window.getSize().x / scale;
     height = (window.getSize().y - 50) / scale;
-    grid.resize(height, std::vector<std::shared_ptr<Cell>>(width, nullptr));
+    grid.resize(width, std::vector<std::shared_ptr<Cell>>(height, nullptr));
     type = CellType::Empty;
     
     textureAtlas = AssetManager::GetTexture("image/atlas.png");
@@ -18,7 +18,7 @@ bool Game::InBounds(int x, int y) {
 }
 
 bool Game::IsEmpty(int x, int y) {
-    return InBounds(x, y) && grid[x][y]->type == CellType::Empty;
+    return InBounds(x, y) && !grid[x][y];
 }
 
 void Game::setCell(sf::Vector2i position) {
@@ -33,19 +33,19 @@ void Game::setCell(sf::Vector2i position) {
         for (int dy = -radius; dy <= radius; dy++) {
             if (dx * dx + dy * dy <= radius * radius) {
                 if (InBounds(x + dx, y + dy)) {
-                    if (grid[y + dy][x + dx] == nullptr || type == CellType::Empty) {
+                    if (grid[x + dx][y + dy] == nullptr || type == CellType::Empty) {
                         switch (type) {
                         case CellType::Sand:
-                            grid[y + dy][x + dx] = std::make_shared<SandCell>(x + dx, y + dy);
+                            grid[x + dx][y + dy] = std::make_shared<SandCell>(x + dx, y + dy);
                             break;
                         case CellType::Water:
-                            grid[y + dy][x + dx] = std::make_shared<WaterCell>(x + dx, y + dy);
+                            grid[x + dx][y + dy] = std::make_shared<WaterCell>(x + dx, y + dy);
                             break;
                         case CellType::Stone:
-                            grid[y + dy][x + dx] = std::make_shared<StoneCell>(x + dx, y + dy);
+                            grid[x + dx][y + dy] = std::make_shared<StoneCell>(x + dx, y + dy);
                             break;
                         case CellType::Empty:
-                            grid[y + dy][x + dx] = nullptr;
+                            grid[x + dx][y + dy] = nullptr;
                             break;
                         default:
                             break;
@@ -68,29 +68,29 @@ void Game::updateRadius(int dr) {
 }
 
 void Game::update(sf::Time const& deltaTime) {
-    for (int y = height - 1; y >= 0; y--) {
-        for (int x = 0; x < width; x++) {
-            if (grid[y][x] && !grid[y][x]->updated) {
-                grid[y][x]->update(grid);
+    for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y++) {
+            if (grid[x][y] && !grid[x][y]->updated) {
+                grid[x][y]->update(grid);
             }
         }
     }
 
-    for (auto& row : grid) {
-        for (auto& cell : row) {
+    for (auto& col : grid) {
+        for (auto& cell : col) {
             if (cell) cell->updated = false;
         }
     }
 }
 
 void Game::draw() {
-    for (int y = 0; y < height; y++) {
-        for (int x = 0; x < width; x++) {
-            if (grid[y][x]) {
+    for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y++) {
+            if (grid[x][y]) {
                 sf::Sprite sprite;
                 sprite.setTexture(textureAtlas);
                 sprite.setScale(scale, scale);
-                switch (grid[y][x]->type) {
+                switch (grid[x][y]->type) {
                 case CellType::Sand:
                     sprite.setTextureRect(sandRect);
                     break;

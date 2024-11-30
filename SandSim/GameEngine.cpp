@@ -80,6 +80,7 @@ void GameEngine::draw() {
 	window->draw(*stoneBtn.getSprite());
 
 	game->draw();
+
 	window->display();
 }
 

@@ -4,7 +4,6 @@
 #include "SandCell.h"
 #include "Cell.h"
 #include "AssetManager.h"
-#include <SFML/Graphics.hpp>
 
 
 class Game {
@@ -14,8 +13,6 @@ public:
 	bool InBounds(int x, int y);
 
 	bool IsEmpty(int x, int y);
-
-	bool IsUpdatableCell(int x, int y);
 
 	void setCell(sf::Vector2i position);
 

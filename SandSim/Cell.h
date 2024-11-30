@@ -6,14 +6,14 @@ enum class CellType {Sand, Water, Fire, Stone, Empty};
 
 class Cell {
 public:
-	size_t x, y;
+	int x, y;
 	CellType type = CellType::Empty;
 	bool updated = false;
 
-	Cell(size_t x, size_t y, CellType type);
+	Cell(int x, int y, CellType type);
 	virtual ~Cell() {}
 
 	virtual void update(std::vector<std::vector<std::shared_ptr<Cell>>>& grid) = 0;
-	bool isEmpty(size_t nx, size_t ny, size_t width, size_t height);
+	bool isEmpty(int nx, int ny, int width, int height);
 	bool moveRight();
 };
