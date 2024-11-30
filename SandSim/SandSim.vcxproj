@@ -149,7 +149,6 @@
     <ClCompile Include="Cell.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameEngine.cpp" />
-    <ClCompile Include="GameSound.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SandCell.cpp" />
     <ClCompile Include="StoneCell.cpp" />
@@ -160,7 +159,6 @@
     <ClInclude Include="Cell.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameEngine.h" />
-    <ClInclude Include="GameSound.h" />
     <ClInclude Include="SandCell.h" />
     <ClInclude Include="StoneCell.h" />
     <ClInclude Include="WaterCell.h" />

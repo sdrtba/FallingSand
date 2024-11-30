@@ -3,6 +3,7 @@
 #include "WaterCell.h"
 #include "SandCell.h"
 #include "Cell.h"
+#include "AssetManager.h"
 #include <SFML/Graphics.hpp>
 
 

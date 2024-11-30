@@ -5,9 +5,9 @@ Game::Game(sf::RenderWindow& window) : window(window) {
     width = window.getSize().x / scale;
     height = (window.getSize().y - 50) / scale;
     grid.resize(height, std::vector<std::shared_ptr<Cell>>(width, nullptr));
-    type = CellType::Sand;
+    type = CellType::Empty;
     
-    if (!textureAtlas.loadFromFile("image/atlas.png")) throw std::runtime_error("Failed to load texture atlas");
+    textureAtlas = AssetManager::GetTexture("image/atlas.png");
     sandRect = sf::IntRect(0, 0, 1, 1);
     waterRect = sf::IntRect(1, 0, 1, 1);
     stoneRect = sf::IntRect(2, 0, 1, 1);

@@ -7,11 +7,10 @@ public:
 	Button(sf::Vector2f location, const sf::Texture& normal, const sf::Texture& clicked);
 	bool checkClick(sf::Vector2i mousePos = sf::Vector2i(-1, -1));
 	sf::Sprite* getSprite();
-
+	void setState(bool);
 private:
 	sf::Sprite normal;
 	sf::Sprite clicked;
 	sf::Sprite* currentSprite;
 	bool isClicked = false;
-	void setState(bool);
 };
