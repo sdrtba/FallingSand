@@ -27,6 +27,11 @@ public:
 	void draw();
 
 private:
+	sf::Texture textureAtlas;
+	sf::IntRect sandRect;
+	sf::IntRect waterRect;
+	sf::IntRect stoneRect;
+
 	CellType type;
 	int width, height, scale;
 	int radius = 0;

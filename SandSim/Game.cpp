@@ -6,6 +6,11 @@ Game::Game(sf::RenderWindow& window) : window(window) {
     height = (window.getSize().y - 50) / scale;
     grid.resize(height, std::vector<std::shared_ptr<Cell>>(width, nullptr));
     type = CellType::Sand;
+    
+    if (!textureAtlas.loadFromFile("image/atlas.png")) throw std::runtime_error("Failed to load texture atlas");
+    sandRect = sf::IntRect(0, 0, 1, 1);
+    waterRect = sf::IntRect(1, 0, 1, 1);
+    stoneRect = sf::IntRect(2, 0, 1, 1);
 }
 
 bool Game::InBounds(int x, int y) {
@@ -13,12 +18,7 @@ bool Game::InBounds(int x, int y) {
 }
 
 bool Game::IsEmpty(int x, int y) {
-    //return InBounds(x, y) && grid[x][y]->type == CellType::Empty;
-    return grid[x][y]->type == CellType::Empty;
-}
-
-bool Game::IsUpdatableCell(int x, int y) {
-    return grid[y][x] && !(grid[y][x]->type == CellType::Stone || grid[y][x]->type == CellType::Empty);
+    return InBounds(x, y) && grid[x][y]->type == CellType::Empty;
 }
 
 void Game::setCell(sf::Vector2i position) {
@@ -70,41 +70,41 @@ void Game::updateRadius(int dr) {
 void Game::update(sf::Time const& deltaTime) {
     for (int y = height - 1; y >= 0; y--) {
         for (int x = 0; x < width; x++) {
-            // IsUpdatableCell(x, y) && !grid[y][x]->updated;
-            if (IsUpdatableCell(x, y) ) {
+            if (grid[y][x] && !grid[y][x]->updated) {
                 grid[y][x]->update(grid);
             }
         }
     }
-    /*for (int y = 0; y < height; y++) {
-        for (int x = 0; x < width; x++) {
-            if (grid[y][x]) {
-                grid[y][x]->updated = false;
-            }
+
+    for (auto& row : grid) {
+        for (auto& cell : row) {
+            if (cell) cell->updated = false;
         }
-    }*/
+    }
 }
 
 void Game::draw() {
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
             if (grid[y][x]) {
-                sf::RectangleShape cellShape(sf::Vector2f(scale, scale));
-                cellShape.setPosition(x * scale, y * scale);
+                sf::Sprite sprite;
+                sprite.setTexture(textureAtlas);
+                sprite.setScale(scale, scale);
                 switch (grid[y][x]->type) {
                 case CellType::Sand:
-                    cellShape.setFillColor(sf::Color::Yellow);
+                    sprite.setTextureRect(sandRect);
                     break;
                 case CellType::Water:
-                    cellShape.setFillColor(sf::Color::Blue);
+                    sprite.setTextureRect(waterRect);
                     break;
                 case CellType::Stone:
-                    cellShape.setFillColor(sf::Color::White);
+                    sprite.setTextureRect(stoneRect);
                     break;
                 default:
                     break;
                 }
-                window.draw(cellShape);
+                sprite.setPosition(x * scale, y * scale);
+                window.draw(sprite);
             }
         }
     }
