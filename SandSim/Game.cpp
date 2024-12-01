@@ -11,6 +11,8 @@ Game::Game(sf::RenderWindow& window) : window(window) {
     sandRect = sf::IntRect(0, 0, 1, 1);
     waterRect = sf::IntRect(1, 0, 1, 1);
     stoneRect = sf::IntRect(2, 0, 1, 1);
+    fireRect = sf::IntRect(3, 0, 1, 1);
+    woodRect = sf::IntRect(4, 0, 1, 1);
 }
 
 bool Game::InBounds(int x, int y) {
@@ -44,6 +46,12 @@ void Game::setCell(sf::Vector2i position) {
                         case CellType::Stone:
                             grid[x + dx][y + dy] = std::make_shared<StoneCell>(x + dx, y + dy);
                             break;
+                        case CellType::Fire:
+                            grid[x + dx][y + dy] = std::make_shared<FireCell>(x + dx, y + dy);
+                            break;
+                        case CellType::Wood:
+                            grid[x + dx][y + dy] = std::make_shared<WoodCell>(x + dx, y + dy);
+                            break;
                         case CellType::Empty:
                             grid[x + dx][y + dy] = nullptr;
                             break;
@@ -64,7 +72,7 @@ void Game::setType(CellType newType) {
 void Game::updateRadius(int dr) {
     radius += dr;
     if (radius <= 0) radius = 0;
-    else if (radius >= 3) radius = 3;
+    else if (radius >= 6) radius = 6;
 }
 
 void Game::update(sf::Time const& deltaTime) {
@@ -99,6 +107,12 @@ void Game::draw() {
                     break;
                 case CellType::Stone:
                     sprite.setTextureRect(stoneRect);
+                    break;
+                case CellType::Fire:
+                    sprite.setTextureRect(fireRect);
+                    break;
+                case CellType::Wood:
+                    sprite.setTextureRect(woodRect);
                     break;
                 default:
                     break;

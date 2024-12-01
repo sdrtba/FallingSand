@@ -147,21 +147,25 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Button.h" />
     <ClCompile Include="Cell.cpp" />
+    <ClCompile Include="FireCell.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SandCell.cpp" />
     <ClCompile Include="StoneCell.cpp" />
     <ClCompile Include="WaterCell.cpp" />
+    <ClCompile Include="WoodCell.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssetManager.h" />
     <ClInclude Include="Cell.h" />
+    <ClInclude Include="FireCell.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="SandCell.h" />
     <ClInclude Include="StoneCell.h" />
     <ClInclude Include="WaterCell.h" />
+    <ClInclude Include="WoodCell.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="openal32.dll" />

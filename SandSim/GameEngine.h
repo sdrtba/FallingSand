@@ -16,8 +16,8 @@ private:
 	Button sandBtn = Button(sf::Vector2f(10 + 40, 600 - 40), AssetManager::GetTexture("image/sand.png"), AssetManager::GetTexture("image/sand1.png"));
 	Button waterBtn = Button(sf::Vector2f(10 + 80, 600 - 40), AssetManager::GetTexture("image/water.png"), AssetManager::GetTexture("image/water1.png"));
 	Button stoneBtn = Button(sf::Vector2f(10 + 120, 600 - 40), AssetManager::GetTexture("image/stone.png"), AssetManager::GetTexture("image/stone1.png"));
-
-	std::vector<Button> buttons = { emptyBtn, sandBtn, waterBtn, stoneBtn };
+	Button fireBtn = Button(sf::Vector2f(10 + 160, 600 - 40), AssetManager::GetTexture("image/fire.png"), AssetManager::GetTexture("image/fire1.png"));
+	Button woodBtn = Button(sf::Vector2f(10 + 200, 600 - 40), AssetManager::GetTexture("image/wood.png"), AssetManager::GetTexture("image/wood1.png"));
 
 	void updateButtons(int index);
 	void input();

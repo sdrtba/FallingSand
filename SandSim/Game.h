@@ -1,4 +1,6 @@
 #pragma once
+#include "WoodCell.h"
+#include "FireCell.h"
 #include "StoneCell.h"
 #include "WaterCell.h"
 #include "SandCell.h"
@@ -29,6 +31,8 @@ private:
 	sf::IntRect sandRect;
 	sf::IntRect waterRect;
 	sf::IntRect stoneRect;
+	sf::IntRect fireRect;
+	sf::IntRect woodRect;
 
 	CellType type;
 	int width, height, scale;

@@ -2,6 +2,7 @@
 
 GameEngine::GameEngine() {
 	emptyBtn.setState(true);
+	window->setFramerateLimit(360);
 }
 
 void GameEngine::updateButtons(int index) {
@@ -9,6 +10,8 @@ void GameEngine::updateButtons(int index) {
 	sandBtn.setState(false);
 	waterBtn.setState(false);
 	stoneBtn.setState(false);
+	fireBtn.setState(false);
+	woodBtn.setState(false);
 	switch (index) {
 	case 0:
 		emptyBtn.setState(true);
@@ -21,6 +24,12 @@ void GameEngine::updateButtons(int index) {
 		break;
 	case 3:
 		stoneBtn.setState(true);
+		break;
+	case 4:
+		fireBtn.setState(true);
+		break;
+	case 5:
+		woodBtn.setState(true);
 		break;
 	}
 }
@@ -59,6 +68,16 @@ void GameEngine::input() {
 			updateButtons(3);
 			game->setType(CellType::Stone);
 		}
+		else if (fireBtn.checkClick(sf::Mouse::getPosition(*window)))
+		{
+			updateButtons(4);
+			game->setType(CellType::Fire);
+		}
+		else if (woodBtn.checkClick(sf::Mouse::getPosition(*window)))
+		{
+			updateButtons(5);
+			game->setType(CellType::Wood);
+		}
 		else {
 			game->setCell(sf::Mouse::getPosition(*window));
 		}
@@ -78,6 +97,8 @@ void GameEngine::draw() {
 	window->draw(*sandBtn.getSprite());
 	window->draw(*waterBtn.getSprite());
 	window->draw(*stoneBtn.getSprite());
+	window->draw(*fireBtn.getSprite());
+	window->draw(*woodBtn.getSprite());
 
 	game->draw();
 

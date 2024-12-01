@@ -1,8 +1,8 @@
 #pragma once
 #include "Cell.h"
 
-class SandCell : public Cell {
+class WoodCell : public Cell {
 public:
-    SandCell(size_t x, size_t y);
+    WoodCell(size_t x, size_t y);
     void update(std::vector<std::vector<std::shared_ptr<Cell>>>& grid) override;
 };
