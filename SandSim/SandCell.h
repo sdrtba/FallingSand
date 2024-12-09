@@ -3,6 +3,6 @@
 
 class SandCell : public Cell {
 public:
-    SandCell(size_t x, size_t y);
+    SandCell(int x, int y);
     void update(std::vector<std::vector<std::shared_ptr<Cell>>>& grid) override;
 };

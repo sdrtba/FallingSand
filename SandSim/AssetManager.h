@@ -1,19 +1,16 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include <assert.h>
-#include <map>
-#include <memory>
+#include <unordered_map>
 
-class AssetManager
-{
+class AssetManager {
 public:
-	AssetManager();
+	AssetManager() = default;
 
 	static sf::Texture& GetTexture(std::string const& filename);
 	static sf::Font& GetFont(std::string const& filename);
 private:
-	std::map<std::string, sf::Texture> m_Textures;
-	std::map<std::string, sf::Font> m_Fonts;
+	static AssetManager* getInstance();
 
-	static AssetManager* sInstance;
+	std::unordered_map<std::string, sf::Texture> m_Textures;
+	std::unordered_map<std::string, sf::Font> m_Fonts;
 };

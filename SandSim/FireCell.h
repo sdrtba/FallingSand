@@ -3,6 +3,6 @@
 
 class FireCell : public Cell {
 public:
-    FireCell(size_t x, size_t y);
+    FireCell(int x, int y);
     void update(std::vector<std::vector<std::shared_ptr<Cell>>>& grid) override;
 };

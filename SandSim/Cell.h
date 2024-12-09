@@ -1,10 +1,8 @@
 #pragma once
 #include <vector>
 #include <memory>
-#include <iostream>
 
-
-enum class CellType {Sand, Water, Fire, Stone, Wood, Empty};
+enum class CellType { Sand, Water, Fire, Stone, Wood, Empty };
 
 class Cell {
 public:

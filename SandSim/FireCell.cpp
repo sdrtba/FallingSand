@@ -1,7 +1,7 @@
 #include "FireCell.h"
 #include <algorithm>
 
-FireCell::FireCell(size_t x, size_t y) : Cell(x, y, CellType::Fire) {
+FireCell::FireCell(int x, int y) : Cell(x, y, CellType::Fire) {
     lifetime = rand() % 30 + 10;
     tickToMove = rand() % 30 + 30;
 }

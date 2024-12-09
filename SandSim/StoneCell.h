@@ -3,8 +3,6 @@
 
 class StoneCell : public Cell {
 public:
-    StoneCell(size_t x, size_t y);
+    StoneCell(int x, int y);
     void update(std::vector<std::vector<std::shared_ptr<Cell>>>& grid) override;
-
-    bool canSwap(std::vector<std::vector<std::shared_ptr<Cell>>>& grid);
 };

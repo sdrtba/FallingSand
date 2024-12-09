@@ -1,35 +1,28 @@
 #include "Button.h"
 
-Button::Button(sf::Vector2f location, const sf::Texture& normal, const sf::Texture& clicked) {
-	this->normal.setTexture(normal);
-	this->clicked.setTexture(clicked);
+
+Button::Button(sf::Vector2f location, const CellType type, const sf::Texture& normal, const sf::Texture& clicked)
+	: normal(normal), clicked(clicked), cellType(type), currentSprite(&this->normal) {
 	this->normal.setPosition(location);
 	this->clicked.setPosition(location);
-	currentSprite = &this->normal;
+	bounds = currentSprite->getGlobalBounds();
 }
 
-bool Button::checkClick(sf::Vector2i mousePos) {
-	if (mousePos.x >= 0) {
-		if ((static_cast<float>(mousePos.x) > currentSprite->getPosition().x &&
-			static_cast<float>(mousePos.x) < (currentSprite->getPosition().x + currentSprite->getGlobalBounds().width))
-			&& (static_cast<float>(mousePos.y) > currentSprite->getPosition().y &&
-				static_cast<float>(mousePos.y) < (currentSprite->getPosition().y + currentSprite->getGlobalBounds().height)))
-		{
-			return true;
-		}
-	}
-	return false;
+
+bool Button::checkClick(sf::Vector2i mousePos) const {
+	return bounds.contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
 }
 
 void Button::setState(bool state) {
 	isClicked = state;
-	if (isClicked) {
-		currentSprite = &clicked;
-		return;
-	}
-	currentSprite = &normal;
+	currentSprite = isClicked ? &clicked : &normal;
 }
 
-sf::Sprite* Button::getSprite() {
+
+sf::Sprite* Button::getSprite() const {
 	return currentSprite;
+}
+
+CellType Button::getCellType() const { 
+	return cellType; 
 }

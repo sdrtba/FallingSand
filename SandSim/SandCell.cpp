@@ -1,7 +1,7 @@
 #include "SandCell.h"
 #include <algorithm>
 
-SandCell::SandCell(size_t x, size_t y) : Cell(x, y, CellType::Sand) {}
+SandCell::SandCell(int x, int y) : Cell(x, y, CellType::Sand) {}
 
 void SandCell::update(std::vector<std::vector<std::shared_ptr<Cell>>>& grid) {
     int width = grid.size();

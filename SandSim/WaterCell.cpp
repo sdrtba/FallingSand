@@ -1,7 +1,7 @@
 #include "WaterCell.h"
 #include <algorithm>
 
-WaterCell::WaterCell(size_t x, size_t y) : Cell(x, y, CellType::Water) {}
+WaterCell::WaterCell(int x, int y) : Cell(x, y, CellType::Water) {}
 
 void WaterCell::update(std::vector<std::vector<std::shared_ptr<Cell>>>& grid) {
     int width = grid.size();
@@ -47,7 +47,7 @@ void WaterCell::update(std::vector<std::vector<std::shared_ptr<Cell>>>& grid) {
         }
     }
 
-    if (inBounds(x + direction, y, width, height)) {
+    else if (inBounds(x + direction, y, width, height)) {
         if (grid[x + direction][y] == nullptr) {
             std::swap(grid[x][y], grid[x + direction][y]);
             x += direction;

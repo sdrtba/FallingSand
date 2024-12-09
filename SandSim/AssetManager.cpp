@@ -1,45 +1,39 @@
 #include "AssetManager.h"
 
-AssetManager* AssetManager::sInstance = nullptr;
-
-AssetManager::AssetManager()
+AssetManager* AssetManager::getInstance()
 {
-	assert(sInstance == nullptr);
-	sInstance = this;
+	static AssetManager instance;
+	return &instance;
 }
 
 sf::Texture& AssetManager::GetTexture(std::string const& filename)
 {
-	auto& texMap = sInstance->m_Textures;
-
+	auto& texMap = getInstance()->m_Textures;
 	auto pairFound = texMap.find(filename);
 
 	if (pairFound != texMap.end())
 	{
 		return pairFound->second;
 	}
-	else
-	{
-		auto& texture = texMap[filename];
-		texture.loadFromFile(filename);
-		return texture;
-	}
 
+	sf::Texture texture;
+	texture.loadFromFile(filename);
+	texMap[filename] = texture;
+	return texMap[filename];
 }
 
 sf::Font& AssetManager::GetFont(std::string const& filename)
 {
-	auto& fontMap = sInstance->m_Fonts;
+	auto& fontMap = getInstance()->m_Fonts;
 	auto pairFound = fontMap.find(filename);
 
 	if (pairFound != fontMap.end())
 	{
 		return pairFound->second;
 	}
-	else
-	{
-		auto& font = fontMap[filename];
-		font.loadFromFile(filename);
-		return font;
-	}
+	
+	sf::Font font;
+	font.loadFromFile(filename);
+	fontMap[filename] = font;
+	return fontMap[filename];
 }
