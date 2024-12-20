@@ -2,7 +2,6 @@
 #include "Game.h"
 #include "Button.h"
 
-
 class GameEngine {
 public:
     GameEngine();
@@ -12,7 +11,7 @@ private:
     static constexpr int windowHeight = 600;
     bool isPaused = false;
 
-    AssetManager manager;
+    AssetManager assetManager;
     std::unique_ptr<sf::RenderWindow> window;
     std::unique_ptr<Game> game;
     std::vector<std::shared_ptr<Button>> buttons;

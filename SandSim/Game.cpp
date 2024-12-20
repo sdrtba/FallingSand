@@ -1,6 +1,5 @@
 #include "Game.h"
 
-
 Game::Game(sf::RenderWindow& window) : window(window) {
     radius = 1;
     scale = 4;
@@ -8,13 +7,13 @@ Game::Game(sf::RenderWindow& window) : window(window) {
     height = (window.getSize().y - 50) / scale;
     grid.resize(width, std::vector<std::shared_ptr<Cell>>(height, nullptr));
     type = CellType::Empty;
-    
     textureAtlas = AssetManager::GetTexture("image/atlas.png");
     sandRect = sf::IntRect(0, 0, 1, 1);
     waterRect = sf::IntRect(1, 0, 1, 1);
     stoneRect = sf::IntRect(2, 0, 1, 1);
     fireRect = sf::IntRect(3, 0, 1, 1);
     woodRect = sf::IntRect(4, 0, 1, 1);
+    powderRect = sf::IntRect(5, 0, 1, 1);
 }
 
 bool Game::InBounds(int x, int y) const {
@@ -52,6 +51,8 @@ std::shared_ptr<Cell> Game::createCell(int x, int y) {
         return std::make_shared<FireCell>(x, y);
     case CellType::Wood:
         return std::make_shared<WoodCell>(x, y);
+    case CellType::Powder:
+        return std::make_shared<PowderCell>(x, y);
     default:
         return nullptr;
     }
@@ -63,7 +64,7 @@ void Game::setType(CellType newType) {
 
 void Game::updateRadius(int dr) {
     radius += dr;
-    if (radius <= 1) radius = 1;
+    if (radius <= 0) radius = 0;
     else if (radius >= 6) radius = 6;
 }
 
@@ -76,19 +77,14 @@ void Game::update(sf::Time const& deltaTime) {
             }
         }
     }
+}
 
-    /*for (auto& col : grid) {
-        for (auto& cell : col) {
-            if (cell && !cell->updated) {
-                cell->update(grid);
-            }
-        }
-    }
+void Game::clear() {
     for (auto& col : grid) {
         for (auto& cell : col) {
-            if (cell) cell->updated = false;
+        cell = nullptr;
         }
-    }*/
+    }
 }
 
 void Game::draw() {
@@ -118,5 +114,7 @@ sf::IntRect Game::getRectForCell(CellType cellType) const {
         return fireRect;
     case CellType::Wood:
         return woodRect;
+    case CellType::Powder:
+        return powderRect;
     }
 }

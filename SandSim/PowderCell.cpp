@@ -1,11 +1,42 @@
-#include "SandCell.h"
+#include "PowderCell.h"
+#include "FireCell.h"
 
-SandCell::SandCell(int x, int y) : Cell(x, y, CellType::Sand) {}
+PowderCell::PowderCell(int x, int y) : Cell(x, y, CellType::Powder) {
+    fireResist = rand() % 5;
+}
 
-void SandCell::update(std::vector<std::vector<std::shared_ptr<Cell>>>& grid) {
+void PowderCell::update(std::vector<std::vector<std::shared_ptr<Cell>>>& grid) {
+    if (fireResist < 0) {
+        grid[x][y] = std::make_shared<FireCell>(x, y);
+
+        for (int dx = -2; dx <= 2; dx++) {
+            for (int dy = -2; dy <= 2; dy++) {
+                if (inBounds(x + dx, y + dy)) {
+                    if (grid[x + dx][y + dy] &&
+                        !(grid[x + dx][y + dy]->type == CellType::Fire ||
+                        grid[x + dx][y + dy]->type == CellType::Powder)) {
+                        grid[x + dx][y + dy] = nullptr;
+                    }
+                }
+            }
+        }
+
+        return;
+    }
+
     width = grid.size();
     height = grid[0].size();
     direction = rand() % 2 * 2 - 1;
+
+    for (int dx = -1; dx <= 1; dx++) {
+        for (int dy = -1; dy <= 1; dy++) {
+            if (inBounds(x + dx, y + dy)) {
+                if (grid[x + dx][y + dy] && grid[x + dx][y + dy]->type == CellType::Fire) {
+                    fireResist -= 1;
+                }
+            }
+        }
+    }
 
     if (!updated && inBounds(x, y + 1)) {
         if (grid[x][y + 1] == nullptr) {
@@ -19,10 +50,6 @@ void SandCell::update(std::vector<std::vector<std::shared_ptr<Cell>>>& grid) {
             grid[x][y]->y -= 1;
             grid[x][y]->updated = false;
             y += 1;
-        }
-        else if (grid[x][y + 1]->type == CellType::Fire) {
-            updated = true;
-            grid[x][y + 1] = nullptr;
         }
     }
 
@@ -41,10 +68,6 @@ void SandCell::update(std::vector<std::vector<std::shared_ptr<Cell>>>& grid) {
             grid[x][y]->updated = false;
             y += 1;
             x += direction;
-        }
-        else if (grid[x + direction][y + 1]->type == CellType::Fire) {
-            updated = true;
-            grid[x + direction][y + 1] = nullptr;
         }
     }
 }

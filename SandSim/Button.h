@@ -1,7 +1,6 @@
 #pragma once
 #include <SFML\Graphics.hpp>
-#include "Cell.h"
-
+#include "CellType.h"
 
 class Button {
 public:

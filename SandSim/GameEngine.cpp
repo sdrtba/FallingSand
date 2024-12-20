@@ -1,6 +1,5 @@
 #include "GameEngine.h"
 
-
 GameEngine::GameEngine()
     : window(std::make_unique<sf::RenderWindow>(sf::VideoMode(windowWidth, windowHeight), L"Sand", sf::Style::Close)),
     game(std::make_unique<Game>(*window)) {
@@ -24,6 +23,7 @@ void GameEngine::initializeButtons() {
         {{130, windowHeight - 40}, CellType::Stone, "image/stone.png", "image/stone1.png"},
         {{170, windowHeight - 40}, CellType::Fire, "image/fire.png", "image/fire1.png"},
         {{210, windowHeight - 40}, CellType::Wood, "image/wood.png", "image/wood1.png"},
+        {{250, windowHeight - 40}, CellType::Powder, "image/powder.png", "image/powder1.png"},
     };
 
     for (const auto& data : buttonData) {
@@ -49,6 +49,7 @@ void GameEngine::input() {
 
         if (event.type == sf::Event::KeyPressed) {
             if (event.key.code == sf::Keyboard::Num0) isPaused = !isPaused;
+            if (event.key.code == sf::Keyboard::Equal) game->clear();
             if (event.key.code == sf::Keyboard::LBracket) game->updateRadius(-1);
             else if (event.key.code == sf::Keyboard::RBracket) game->updateRadius(1);
         }

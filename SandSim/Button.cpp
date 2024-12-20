@@ -1,6 +1,5 @@
 #include "Button.h"
 
-
 Button::Button(sf::Vector2f location, const CellType type, const sf::Texture& normal, const sf::Texture& clicked)
 	: normal(normal), clicked(clicked), cellType(type), currentSprite(&this->normal) {
 	this->normal.setPosition(location);
